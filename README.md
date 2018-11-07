@@ -1,4 +1,13 @@
+
+
+
+
 # GermaParl - Corpus of Plenary Protocols
+
+## adaptions by csae8092
+
+* moved all tei-xml files into data/editions
+* added TEI namespace
 
 The GermaParl corpus has been prepared in the
 [PolMine Project](https://polmine.github.io/) based on the
