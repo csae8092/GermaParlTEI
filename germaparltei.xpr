@@ -4,13 +4,13 @@
         <filters directoryPatterns="" filePatterns="germaparltei.xpr" positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
             <serialized version="18.1" xml:space="preserve">
-                <map>
+                <serializableOrderedMap>
                     <entry>
                         <String>scenario.associations</String>
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>data/orig/</String>
+                                    <String>orig/BT_15_110.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -26,6 +26,36 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>data/editions/BT_13_209.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>add_ns</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>orig/BT_13_209.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>add_ns</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XSL</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>data/orig/</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -131,7 +161,7 @@
                             </scenario>
                         </scenario-array>
                     </entry>
-                </map>
+                </serializableOrderedMap>
             </serialized>
         </options>
     </meta>

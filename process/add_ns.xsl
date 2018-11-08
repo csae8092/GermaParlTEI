@@ -91,8 +91,17 @@ version="2.0">
         </sp>
     </xsl:template>
     <xsl:template match="speaker">
+        <xsl:variable name="who">
+            <xsl:value-of select="parent::sp[last()]/@who"/>
+        </xsl:variable>
+        <xsl:variable name="xmlid">
+            <xsl:value-of select="concat('#per__', translate(lower-case(replace($who, ' ', '-')), 'äöü', 'aou'))"/>
+        </xsl:variable>
         <speaker>
             <rs type="person">
+                <xsl:attribute name="ref">
+                    <xsl:value-of select="$xmlid"/>
+                </xsl:attribute>
                 <xsl:attribute name="role">
                     <xsl:value-of select="parent::sp[last()]/@role"/>
                 </xsl:attribute>
@@ -106,7 +115,64 @@ version="2.0">
             <xsl:apply-templates/>
             <back>
                 <listPerson>
-                    <xsl:for-each select="//sp">
+                    <xsl:for-each-group select="//sp" group-by="./@who">
+                        <xsl:variable name="who">
+                            <xsl:value-of select="data(./@who)"/>
+                        </xsl:variable>
+                        <xsl:variable name="xmlid">
+                            <xsl:value-of select="concat('per__', translate(lower-case(replace($who, ' ', '-')), 'äöü', 'aou'))"/>
+                        </xsl:variable>
+                        <person>
+                            <xsl:attribute name="xml:id">
+                                <xsl:value-of select="$xmlid"/>
+                            </xsl:attribute>
+                            <xsl:choose>
+                                <xsl:when test="contains($who, '.')">
+                                    <persName>
+                                        <surname>
+                                            <xsl:value-of select="tokenize($who, ' ')[last()]"/>
+                                        </surname>
+                                        <forename>
+                                            <xsl:value-of select="subsequence(tokenize($who, ' '), 2, count(tokenize($who, ' '))-2)"/>
+                                        </forename>
+                                        <roleName><xsl:value-of select="tokenize($who, ' ')[1]"/></roleName>
+                                    </persName>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <persName>
+                                        <surname>
+                                            <xsl:value-of select="tokenize($who, ' ')[last()]"/>
+                                        </surname>
+                                        <forename>
+                                            <xsl:value-of select="subsequence(tokenize($who, ' '), 1, count(tokenize($who, ' '))-1)"/>
+                                        </forename>
+                                    </persName>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <affiliation>
+                                <rs type="org" subtype="party">
+                                    <xsl:attribute name="ref">
+                                        <xsl:value-of select="concat('#org__', ./@party)"/>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="./@party"/></rs> 
+                            </affiliation>
+                            <xsl:choose>
+                                <xsl:when test="data(./@position) eq 'NA'"/>
+                                <xsl:otherwise>
+                                    <occupation>
+                                        <xsl:attribute name="notBefore">
+                                            <xsl:value-of select="$date"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute name="notAfter">
+                                            <xsl:value-of select="$date"/>
+                                        </xsl:attribute>
+                                        <xsl:value-of select="./@position"/>
+                                    </occupation>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </person> 
+                    </xsl:for-each-group>
+                    <!--<xsl:for-each select="//sp">
                         <person>
                             <persName>
                                 <xsl:value-of select="./@who"/>
@@ -119,7 +185,7 @@ version="2.0">
                             </affiliation>
                             
                         </person>
-                    </xsl:for-each>
+                    </xsl:for-each>-->
                 </listPerson>
             </back>
         </text>
